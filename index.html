@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>kira kg</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- PANTALLA DE CARGA -->
+  <div id="loadingScreen"></div>
+
+  <!-- REGISTRO DE USUARIO (una cuenta por dispositivo) -->
+  <div id="userGate" class="login-screen" style="display:none;">
+    <div class="login-box">
+      <h2>¡Bienvenido!</h2>
+      <p>Elige tu nombre de usuario</p>
+      <input type="text" id="usernameInput" placeholder="Nombre de usuario" autocomplete="off">
+      <button id="usernameBtn" class="primary">Continuar</button>
+      <div id="usernameError" class="login-error"></div>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div id="app" style="display:none;">
+
+    <header class="topbar" id="topbarEl">
+      <span class="logo" id="logoText">kira kg</span>
+      <div class="icons-right">
+        <button class="icon-btn" id="btnSearch" title="Buscar">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+        <button class="icon-btn" id="btnBell" title="Notificaciones">
+          <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span id="bellBadge" class="badge" style="display:none;"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <section id="view-home" class="view active">
+        <div class="stories" id="storiesRow"></div>
+        <div class="feed" id="feed"></div>
+      </section>
+
+      <section id="view-search" class="view">
+        <h2 class="view-title">Buscar</h2>
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar por nombre de usuario...">
+        <div id="searchResults" class="search-results"></div>
+      </section>
+
+      <section id="view-message" class="view">
+        <div id="convListWrap">
+          <h2 class="view-title">Mensajes</h2>
+          <div id="convList"></div>
+        </div>
+
+        <div id="chatView" style="display:none;">
+          <div class="chat-header">
+            <button id="backToList" class="icon-btn">
+              <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+            <img id="chatAvatar">
+            <b id="chatUser"></b>
+          </div>
+          <div id="chatMessages" class="chat-messages"></div>
+          <div class="chat-input-row">
+            <input type="text" id="chatInput" placeholder="Escribe un mensaje...">
+            <button id="chatSend" class="primary">Enviar</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-video" class="view video-view">
+        <div class="video-tabs">
+          <button class="video-tab-btn active" data-vtab="mundial">Mundial</button>
+          <button class="video-tab-btn" data-vtab="local">Local</button>
+          <button id="btnAddVideo" class="video-add-btn" title="Agregar video">+ Video</button>
+        </div>
+        <div id="videoMundial" class="video-feed"></div>
+        <div id="videoLocal" class="video-feed" style="display:none;"></div>
+      </section>
+
+      <!-- MODAL AGREGAR VIDEO -->
+      <div id="addVideoModal" class="modal-overlay">
+        <div class="modal">
+          <h3 id="addVideoTitle">Agregar video</h3>
+          <div id="addVideoUrlField">
+            <input type="text" id="userNewVideoUrl" placeholder="Pega el enlace del video de YouTube">
+          </div>
+          <div id="addVideoFileField" style="display:none;">
+            <input type="file" id="userNewVideoFile" accept="video/*">
+          </div>
+          <div id="userVideoError" class="login-error"></div>
+          <div class="modal-actions">
+            <button id="cancelAddVideo">Cancelar</button>
+            <button id="confirmAddVideo" class="primary">Enviar</button>
+          </div>
+        </div>
+      </div>
+
+      <section id="view-account" class="view">
+        <div class="profile-header" id="profileHeader">
+          <a href="profile-editor.html" id="brushBtn" class="brush-btn" title="Editar perfil">
+            <svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+          </a>
+          <div class="profile-top">
+            <div id="profileAvatar" class="profile-avatar-lg avatar-bg"></div>
+            <div class="profile-name-lg" id="profileName">usuario</div>
+          </div>
+          <div class="profile-actions" id="profileActions">
+            <button id="followBtn" class="profile-btn">Seguir</button>
+            <button id="messageBtn" class="profile-btn">Mensaje</button>
+          </div>
+          <div class="profile-stats-row">
+            <div><b id="statFollowers">0</b><span>Seguidores</span></div>
+            <div><b id="statFollowing">0</b><span>Seguidos</span></div>
+            <div><b id="statVideos">0</b><span>Videos</span></div>
+            <div><b id="statPosts">0</b><span>Publicaciones</span></div>
+          </div>
+          <div class="profile-bio" id="profileBio"></div>
+        </div>
+
+        <div class="profile-tabs">
+          <button class="tab-btn active" data-tab="posts" title="Publicaciones">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
+          </button>
+          <button class="tab-btn" data-tab="videos" title="Videos publicados">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </button>
+          <button class="tab-btn" data-tab="saved" title="Guardado">
+            <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          </button>
+          <button class="tab-btn" data-tab="shared" title="Compartido">
+            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"></line><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"></line></svg>
+          </button>
+        </div>
+        <div class="profile-content" id="profileContent"></div>
+      </section>
+
+    </main>
+
+    <!-- MODAL COMENTARIOS -->
+    <div id="commentModal" class="modal-overlay">
+      <div class="modal">
+        <h3>Comentarios</h3>
+        <div id="commentList" class="comment-list"></div>
+        <div class="comment-input-row">
+          <input type="text" id="commentInput" placeholder="Escribe un comentario...">
+          <button id="commentSend" class="primary">Enviar</button>
+        </div>
+        <div class="modal-actions">
+          <button id="closeComments">Cerrar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL NOTIFICACIONES -->
+    <div id="notifModal" class="modal-overlay">
+      <div class="modal">
+        <h3>Notificaciones</h3>
+        <div id="notifList" class="notif-list"></div>
+        <div class="modal-actions">
+          <button id="closeNotifs">Cerrar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL COMPARTIR -->
+    <div id="shareModal" class="modal-overlay">
+      <div class="modal">
+        <h3>Compartir publicación</h3>
+        <button id="shareToAll" class="primary" style="width:100%;">Compartir con todos en kira kg</button>
+        <button id="shareExternal" type="button" style="width:100%;">Compartir fuera de la app</button>
+        <input type="text" id="shareUserSearch" placeholder="Buscar usuario para enviar...">
+        <div id="shareUserList" class="search-results" style="max-height:200px; overflow-y:auto;"></div>
+        <div class="modal-actions">
+          <button id="closeShare">Cerrar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL NUEVA PUBLICACIÓN -->
+    <div id="createModal" class="modal-overlay">
+      <div class="modal">
+        <h3>Nueva publicación</h3>
+        <div class="post-type-toggle">
+          <button type="button" id="modeImageBtn" class="post-type-btn active">Foto/Video</button>
+          <button type="button" id="modeTextBtn" class="post-type-btn">Solo texto</button>
+        </div>
+
+        <div id="imagePostFields">
+          <input type="file" id="newPostFile" accept="image/*" multiple>
+          <input type="text" id="newPostUrl" placeholder="...o pega una URL de imagen">
+        </div>
+
+        <div id="textPostFields" style="display:none;">
+          <textarea id="newPostTextContent" placeholder="Escribe tu publicación de texto..."></textarea>
+          <label>Tipo de letra
+            <select id="newPostFont">
+              <option value="inherit">Predeterminada</option>
+              <option value="Arial, sans-serif">Arial</option>
+              <option value="Georgia, serif">Georgia</option>
+              <option value="'Courier New', monospace">Courier New</option>
+              <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+              <option value="Verdana, sans-serif">Verdana</option>
+              <option value="'Times New Roman', serif">Times New Roman</option>
+            </select>
+          </label>
+          <div class="row-2">
+            <label>Tamaño (px)<input type="number" id="newPostFontSize" value="22" min="10" max="60"></label>
+            <label>Color de texto<input type="color" id="newPostTextColor" value="#ffffff"></label>
+          </div>
+          <label>Color de fondo<input type="color" id="newPostBgColor" value="#111318"></label>
+        </div>
+
+        <textarea id="newPostCaption" placeholder="Escribe una descripción..."></textarea>
+        <div class="modal-actions">
+          <button id="cancelPost">Cancelar</button>
+          <button id="confirmPost" class="primary">Publicar</button>
+        </div>
+      </div>
+    </div>
+
+    <nav class="bottombar" id="bottombarEl">
+      <button class="nav-btn active" data-view="home" title="Inicio">
+        <svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"></path><path d="M5 10v10h14V10"></path></svg>
+        <span class="dock-label">Inicio</span>
+      </button>
+      <button class="nav-btn" data-view="message" title="Mensajes">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span id="msgBadge" class="badge" style="display:none;"></span>
+        <span class="dock-label">Mensajes</span>
+      </button>
+      <button class="nav-btn plus-btn" id="btnPlus" title="Crear">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span class="dock-label">Crear</span>
+      </button>
+      <button class="nav-btn" data-view="video" title="Videos">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        <span class="dock-label">Videos</span>
+      </button>
+      <button class="nav-btn" data-view="account" title="Cuenta">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg>
+        <span class="dock-label">Cuenta</span>
+      </button>
+    </nav>
+
+  </div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="device.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

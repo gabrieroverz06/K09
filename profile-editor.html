@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar perfil — kira kg</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="editor-body">
+
+  <div id="noUserScreen" class="login-screen" style="display:none;">
+    <div class="login-box">
+      <h2>Primero crea tu cuenta</h2>
+      <p>Entra a la app y elige tu nombre de usuario antes de personalizar tu perfil.</p>
+      <a href="index.html"><button class="primary">Ir a la app</button></a>
+    </div>
+  </div>
+
+  <div id="editorScreen" class="editor-screen">
+    <h1>Editar mi perfil</h1>
+
+    <div class="editor-grid">
+      <div class="editor-panel">
+
+        <fieldset>
+          <legend>Fondo</legend>
+          <label>Color de fondo del perfil <input type="color" id="bgColor"></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Nombre de usuario</legend>
+          <label>Tipo de letra
+            <select id="userFont">
+              <option value="inherit">Predeterminada</option>
+              <option value="Arial, sans-serif">Arial</option>
+              <option value="Georgia, serif">Georgia</option>
+              <option value="'Courier New', monospace">Courier New</option>
+              <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+              <option value="Verdana, sans-serif">Verdana</option>
+              <option value="'Times New Roman', serif">Times New Roman</option>
+            </select>
+          </label>
+          <div class="row-2">
+            <label>Tamaño (px) <input type="number" id="userSize" min="10" max="60"></label>
+            <label>Color de letra <input type="color" id="userColor"></label>
+          </div>
+          <div class="row-2">
+            <label>Posición X <input type="number" id="userX"></label>
+            <label>Posición Y <input type="number" id="userY"></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Descripción</legend>
+          <label>Texto
+            <input type="text" id="bioContent" placeholder="Escribe tu descripción...">
+          </label>
+          <label>Tipo de letra
+            <select id="bioFont">
+              <option value="inherit">Predeterminada</option>
+              <option value="Arial, sans-serif">Arial</option>
+              <option value="Georgia, serif">Georgia</option>
+              <option value="'Courier New', monospace">Courier New</option>
+              <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+              <option value="Verdana, sans-serif">Verdana</option>
+              <option value="'Times New Roman', serif">Times New Roman</option>
+            </select>
+          </label>
+          <div class="row-2">
+            <label>Tamaño (px) <input type="number" id="bioSize" min="8" max="40"></label>
+            <label>Color de letra <input type="color" id="bioColor"></label>
+          </div>
+          <div class="row-2">
+            <label>Posición X <input type="number" id="bioX"></label>
+            <label>Posición Y <input type="number" id="bioY"></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Foto de perfil</legend>
+          <label>Subir desde el ordenador
+            <input type="file" id="avatarFile" accept="image/*">
+          </label>
+          <label>...o URL de imagen
+            <input type="text" id="avatarUrl" placeholder="https://...">
+          </label>
+          <label>Tus fotos guardadas</label>
+          <div id="avatarGallery" class="avatar-gallery"></div>
+          <div class="row-2">
+            <label>Tamaño (px) <input type="number" id="avatarSize" min="30" max="200"></label>
+            <label>Color de borde <input type="color" id="avatarColor"></label>
+          </div>
+          <div class="row-2">
+            <label>Posición X <input type="number" id="avatarX"></label>
+            <label>Posición Y <input type="number" id="avatarY"></label>
+          </div>
+          <label>Zoom de la foto
+            <input type="range" id="avatarZoom" min="100" max="300" value="100">
+          </label>
+          <p style="font-size:12px; color:var(--muted); margin:0;">Arrastra la foto dentro del círculo de la vista previa para acomodarla.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Botón Seguir</legend>
+          <label>Color de fondo <input type="color" id="followColor"></label>
+          <label>Color de letra <input type="color" id="followTextColor"></label>
+          <label>Tipo de letra
+            <select id="followFont">
+              <option value="inherit">Predeterminada</option>
+              <option value="Arial, sans-serif">Arial</option>
+              <option value="Georgia, serif">Georgia</option>
+              <option value="'Courier New', monospace">Courier New</option>
+              <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+              <option value="Verdana, sans-serif">Verdana</option>
+            </select>
+          </label>
+          <div class="row-2">
+            <label>Posición X <input type="number" id="followX"></label>
+            <label>Posición Y <input type="number" id="followY"></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Botón Mensaje</legend>
+          <label>Color de fondo <input type="color" id="msgColor"></label>
+          <label>Color de letra <input type="color" id="msgTextColor"></label>
+          <label>Tipo de letra
+            <select id="msgFont">
+              <option value="inherit">Predeterminada</option>
+              <option value="Arial, sans-serif">Arial</option>
+              <option value="Georgia, serif">Georgia</option>
+              <option value="'Courier New', monospace">Courier New</option>
+              <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+              <option value="Verdana, sans-serif">Verdana</option>
+            </select>
+          </label>
+          <div class="row-2">
+            <label>Posición X <input type="number" id="msgX"></label>
+            <label>Posición Y <input type="number" id="msgY"></label>
+          </div>
+        </fieldset>
+
+        <div class="editor-actions">
+          <button id="saveBtn" class="primary">Guardar cambios</button>
+          <button id="resetBtn">Restablecer</button>
+          <a href="index.html"><button type="button">Volver a la app</button></a>
+        </div>
+      </div>
+
+      <div class="editor-preview-wrap">
+        <p class="preview-label">Vista previa</p>
+        <div id="preview" class="profile-header preview-profile">
+          <div class="profile-top">
+            <div id="pAvatar" class="profile-avatar-lg avatar-bg avatar-draggable"></div>
+            <div class="profile-name-lg" id="pName">usuario</div>
+          </div>
+          <div class="profile-actions">
+            <button id="pFollow" class="profile-btn">Seguir</button>
+            <button id="pMsg" class="profile-btn">Mensaje</button>
+          </div>
+          <div class="profile-stats-row">
+            <div><b>0</b><span>Seguidores</span></div>
+            <div><b>0</b><span>Seguidos</span></div>
+            <div><b>0</b><span>Videos</span></div>
+            <div><b>0</b><span>Publicaciones</span></div>
+          </div>
+          <div class="profile-bio" id="pBio"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="device.js"></script>
+<script src="profile-editor.js"></script>
+</body>
+</html>

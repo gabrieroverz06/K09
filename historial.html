@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>kira kg — Historial</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="editor-body">
+
+  <!-- LOGIN -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-box">
+      <h2>Historial de cuentas</h2>
+      <input type="email" id="emailInput" placeholder="Correo de administrador" autocomplete="username">
+      <input type="password" id="passInput" placeholder="Contraseña" autocomplete="current-password">
+      <button id="loginBtn" class="primary">Entrar</button>
+      <div id="loginError" class="login-error"></div>
+    </div>
+  </div>
+
+  <!-- HISTORIAL -->
+  <div id="historialScreen" class="editor-screen" style="display:none;">
+    <h1>Historial de cuentas</h1>
+
+    <div id="accountsListWrap" class="editor-panel">
+      <p style="color:var(--muted); font-size:13px;">Lista completa de cuentas registradas. Toca una cuenta para ver su historial detallado.</p>
+      <div id="accountsList"></div>
+    </div>
+
+    <div id="accountDetailWrap" class="editor-panel" style="display:none;">
+      <button id="backToAccounts" type="button">&larr; Volver a la lista</button>
+      <h2 id="detailUsername" style="margin:14px 0 6px;"></h2>
+      <p id="detailJoined" style="color:var(--muted); font-size:13px; margin:0 0 14px;"></p>
+
+      <div class="profile-tabs">
+        <button class="tab-btn active" data-htab="posts">Publicaciones</button>
+        <button class="tab-btn" data-htab="videos">Videos URL</button>
+        <button class="tab-btn" data-htab="profile">Editar perfil</button>
+      </div>
+      <div id="detailContent"></div>
+    </div>
+  </div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="historial.js"></script>
+</body>
+</html>
